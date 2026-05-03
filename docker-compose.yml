@@ -30,7 +30,7 @@ services:
     profiles: [infra]
     image: quay.io/keycloak/keycloak:26.5.6
     container_name: authcentral-keycloak
-    command: start-dev
+    command: start-dev --import-realm
     ports:
       - "8181:8080"
     environment:
@@ -40,6 +40,8 @@ services:
       KC_DB_PASSWORD: root
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./infra/keycloak/app-realm-realm.json:/opt/keycloak/data/import/app-realm-realm.json
     depends_on:
       mysql:
         condition: service_healthy
